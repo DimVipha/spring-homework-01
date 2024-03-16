@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .form-inline {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="margin-top: 20px">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>List all of product items</h4>
+            <div class="table-responsive">
+                <form th:action="@{/todo/search}" method="get" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="task" placeholder="Search by task...">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+                </form>
+                <table id="mytable" class="table table-bordred table-striped">
+                    <thead>
+                    <tr>
+                        <!--                            <th><input type="checkbox" id="checkall"></th>-->
+                        <th>id</th>
+                        <th>task</th>
+                        <th>description</th>
+                        <th>Done</th>
+                        <th>createAt</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="todo : ${todos}">
+                        <td th:text="${todo.id}"></td>
+                        <td th:text="${todo.task}"></td>
+                        <td th:text="${todo.description}"></td>
+                        <td th:text="${todo.isDone} ? 'Yes' : 'No'"></td>
+                        <td th:text="${todo.createAt}"></td>
+                        <td>
+                            <form class="form-inline" th:action="@{/todo/edit/{id} (id=${todo.id})}" method="get">
+                                <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                            </form>
+                        </td>
+                        <td>
+                            <!-- Delete Button -->
+                            <form class="form-inline" th:action="@{/todo/delete/{id}(id=${todo.id})}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm ml-2">Delete</button>
+                            </form>
+                            <!--                            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <a href="todo/new" class="btn btn-primary">Add New Item</a>
+                <div class="clearfix"></div>
+                <ul class="pagination pull-right">
+                    <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+                </ul>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
